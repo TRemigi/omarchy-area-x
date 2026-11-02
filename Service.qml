@@ -34,7 +34,7 @@ Scope {
   property var pluginRegistry: null
   property var barWidgetRegistry: null
 
-  readonly property string pluginId: "annihilation.shimmer"
+  readonly property string pluginId: "annihilation.area-x"
   readonly property string home: Quickshell.env("HOME")
   readonly property string dir: Qt.resolvedUrl(".").toString().replace(/^file:\/\//, "")
 

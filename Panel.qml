@@ -11,8 +11,8 @@ import qs.Ui
 
 Panel {
   id: root
-  moduleName: "annihilation.shimmer"
-  ipcTarget: "annihilation.shimmer"
+  moduleName: "annihilation.area-x"
+  ipcTarget: "annihilation.area-x"
   manageIpc: false
 
   property var anchorItem: null

@@ -15,7 +15,7 @@ import qs.Ui
 
 BarWidget {
   id: root
-  moduleName: "annihilation.shimmer"
+  moduleName: "annihilation.area-x"
 
   // Injected by the bar for widget entry points.
   property var shell: null

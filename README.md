@@ -2,7 +2,7 @@
 
 The shell plugin for the [Annihilation theme](https://github.com/TRemigi/omarchy-annihilation-theme)
 for [Omarchy](https://omarchy.org/): *Area X*, the Shimmer and what grows in it. A Quickshell plugin
-(id `annihilation.shimmer`) with a service and a bar widget. It does nothing unless the `annihilation`
+(id `annihilation.area-x`) with a service and a bar widget. It does nothing unless the `annihilation`
 theme is the active one, so it is safe to leave installed when you switch themes.
 
 ## Install
@@ -12,16 +12,18 @@ theme is the active one, so it is safe to leave installed when you switch themes
 
 and to update it:
 
-    omarchy plugin update annihilation.shimmer
+    omarchy plugin update annihilation.area-x
     omarchy restart shell
 
 An update only re-scans plugins; a release that adds a QML file or a shader needs the restart. The
 theme itself is a separate repo, and the Hyprland tweaks and the hook that turns off Omarchy's own
 screensaver (which this plugin's screensaver waits for) are part of its `extras/install link`.
 If you ran that before this plugin had its own repo, it left a symlink at
-`~/.config/omarchy/plugins/annihilation.shimmer`; delete that link (`rm ~/.config/omarchy/plugins/annihilation.shimmer`,
-not `omarchy plugin remove`, which switches the plugin off in `shell.json` first) and then add this one. Your
-settings and the bar glyph's place stay: they are keyed by the plugin id, which has not changed.
+`~/.config/omarchy/plugins/annihilation.shimmer` (the plugin's first id); delete that link (`rm`, not
+`omarchy plugin remove`, which switches the plugin off in `shell.json` first), add this one, and rename the id in
+your `shell.json` so the bar glyph and your settings carry over (they sit inline on the entry with that id):
+
+    sed -i 's/"annihilation.shimmer"/"annihilation.area-x"/g' ~/.config/omarchy/shell.json
 
 Plugins run as unsandboxed code inside `omarchy-shell`; read before you enable.
 
@@ -104,7 +106,7 @@ committed `.qsb` files with `build-shaders.sh` (needs `qt6-shadertools`).
 
 Clone the repo and link it instead of adding it, so edits show up without a pull:
 
-    ln -s ~/dev/omarchy-area-x ~/.config/omarchy/plugins/annihilation.shimmer
+    ln -s ~/dev/omarchy-area-x ~/.config/omarchy/plugins/annihilation.area-x
     omarchy-shell shell rescanPlugins          # after editing; the shell's watcher does not follow symlinks
 
 `omarchy plugin validate .` checks the manifest (and rejects symlinks inside the plugin folder; the

@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Guide for an agent continuing work on **omarchy-area-x**, the shell plugin of the Annihilation theme (plugin
-id `annihilation.shimmer`). Read this before changing anything. `README.md` is the user-facing doc; this file is
+id `annihilation.area-x`). Read this before changing anything. `README.md` is the user-facing doc; this file is
 the why, the gotchas, and how to verify your work.
 
 ## What this is, and the three repos
@@ -9,7 +9,7 @@ the why, the gotchas, and how to verify your work.
 An [Omarchy](https://omarchy.org/) shell plugin (a Quickshell service and a bar widget) for the Annihilation theme
 (Alex Garland's 2018 film, from Jeff VanderMeer's novel). It is installed with `omarchy plugin add` and is dormant
 unless the `annihilation` theme is active. It lives in its own repo because Omarchy's plugin flow installs a repo
-whose root is the plugin; before 2026-11-02 it was `extras/plugin/annihilation.shimmer/` in the theme repo, and this
+whose root is the plugin; before 2026-11-02 it was `extras/plugin/annihilation.shimmer/` in the theme repo (id `annihilation.shimmer`), and this
 repo's history begins with that folder's (earlier messages and docs may mention `extras/dev/`, now `dev/`).
 
 | Repo | What it is |
@@ -19,7 +19,7 @@ repo's history begins with that folder's (earlier messages and docs may mention 
 | `omarchy-annihilation-notifications` (`~/dev/omarchy-annihilation-notifications`) | A separate plugin: the themed notification daemon and the arrival light. Optional, its own project. |
 
 ```
-manifest.json          the plugin (service + bar-widget); id annihilation.shimmer
+manifest.json          the plugin (service + bar-widget); id annihilation.area-x
 Service.qml            settings, theme gate, IPC, idle monitor, passage parts, font loading
 ShimmerLayer.qml       the wallpaper overlay, one per screen
 WindowGlow.qml         light spilling over window edges (shaders/windowglow.frag), CursorTracker.qml feeds it
@@ -450,8 +450,12 @@ iridescence (oil on water); bioluminescent fungi.
 - `omarchy plugin update <id>` fetches `origin HEAD`, fast-forwards (it fails if the clone has local edits),
   validates (rolling back if it fails) and then only runs `rescanPlugins`. A release that adds a QML file or a
   shader still needs `omarchy restart shell`; say so in the release notes and the README.
-- The id `annihilation.shimmer` is what `shell.json` keys the settings and the bar placement on. Renaming it
-  orphans both. Keep it.
+- The id is `annihilation.area-x` (it was `annihilation.shimmer` for the plugin's first days, before the split, and
+  the user chose the new one to match the repo). `shell.json` keys the settings and the bar placement on the id, inline
+  on one entry, so a rename is a one-string edit of that file (the README has the `sed`), but it orphans both until
+  made. Do not rename it again without a migration note; it is also the folder name under `~/.config/omarchy/plugins/`.
+  The `omarchy-shell shimmer ...` IPC target (`IpcHandler { target: "shimmer" }` in `Service.qml`) is a separate name and
+  was left alone.
 - On the author's machines the plugin was once a symlink made by the theme repo's installer (when this lived in
   `extras/plugin/`); `omarchy plugin add` refuses while that exists, so delete the link with `rm`, not `omarchy plugin remove`, which
   switches the plugin off in `shell.json` first and may take its settings and bar placement with it.
