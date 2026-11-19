@@ -5,15 +5,18 @@
 #
 #   python3 dev/make-sounds.py [outdir]     # default: sounds/
 #
-# The aim is the Shimmer, not a bell: a soft glass-like tone with a slow attack (about 0.14 s), a long
+# arrive is a plucked acoustic guitar (dev/guitar.py): a G3 -> A3 hammer-on that rings, over D2 (the low string in drop D) in the bass;
+# guitar.FIGURES has the earlier figures too. It replaced a glass-like G4 tone on 2026-11-19.
+# low and urgent keep the Shimmer's own voice, not a bell: a soft glass-like tone with a slow attack (about 0.14 s), a long
 # decay, and pairs of partials a few cents apart so the tone beats slowly and seems to refract. Higher
 # partials die sooner than the fundamental. A little air (ffmpeg's aecho) and a fade at the end.
-#   arrive   G4 with its fifth, and a faint octave shimmer a moment later
+#   arrive   (guitar.py: the hammer-on, its own levels: -24.5 LUFS, peak about -5 dBFS)
 #   low      C4 alone, quieter and shorter
 #   urgent   G3, then C#4 (a tritone): two slow notes, unsettled but not an alarm
-# Files are normalised after the air is added: -9 dBFS peak for arrive and urgent, -15 for low (the
+# Glass files are normalised after the air is added: -9 dBFS peak for urgent, -15 for low (the
 # quieter one is quieter on purpose). The plugin's volume setting scales them down from there.
 import math, os, struct, subprocess, sys, tempfile, wave
+import guitar
 
 RATE = 44100
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -68,11 +71,7 @@ def render(name, seconds, notes, outdir, target_db=-9.0):
 def main():
     outdir = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "sounds")
     os.makedirs(outdir, exist_ok=True)
-    render("arrive", 3.0, [
-        dict(f=392.0, start=0.0, dur=3.0, amp=1.0),
-        dict(f=588.0, start=0.0, dur=3.0, amp=0.55, decay=2.2),
-        dict(f=784.0 * 1.002, start=0.09, dur=2.4, amp=0.22, decay=2.6),
-    ], outdir)
+    guitar.make_arrive(outdir)
     render("low", 2.0, [
         dict(f=261.6, start=0.0, dur=2.0, amp=0.7, decay=2.4),
     ], outdir, target_db=-15.0)

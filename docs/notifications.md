@@ -98,10 +98,12 @@ numbers are in this file's git history. The feed (`NotificationFeed.qml`), the s
 
 ## Item 2: sound
 
-**Built:** three synthesized tones in `sounds/` (`arrive.ogg` G4 with its fifth and a
-faint octave shimmer, `low.ogg` C4 alone and quieter, `urgent.ogg` G3 then C#4, a
-tritone), made by `dev/make-sounds.py` (stdlib and ffmpeg; rerun it to
-retune). Peaks are -8.8, -14.9 and -8.9 dBFS; the volume setting scales down from
+**Built:** three synthesized tones in `sounds/` (`arrive.ogg` a plucked acoustic guitar: D2 (the low string in
+drop D) thumbed, then G3 plucked and hammered up to A3 (the 11th and 12th of the bass note; earlier figures, vii to i and iv to v, are in `guitar.FIGURES`), which rings (a fingerpicked attack: soft and click-free; `guitar.FINGER`, and `SOFTER` for a step further), from the film's folk guitar theme (2026-11-19; it was
+G4 with its fifth and a faint octave shimmer, a glass tone, before), `low.ogg` C4 alone and quieter, `urgent.ogg` G3 then C#4, a
+tritone), made by `dev/make-sounds.py` and, for `arrive`, `dev/guitar.py` (a Karplus-Strong string with a body response; stdlib and ffmpeg; rerun it to
+retune). Peaks are about -5, -14.9 and -8.9 dBFS (`arrive` is set by loudness, -24.5 LUFS, the old tone's; a plucked
+attack has a higher crest); the volume setting scales down from
 there. Checked by level and spectrogram only: **nobody has heard them.** Playback
 is `Service.playSound` (`pw-play --volume`, falling back to `paplay`, errors
 ignored); the gating is `Service.soundFor`, tested in
@@ -115,7 +117,8 @@ current volume whether or not sound is on; `omarchy-shell shimmer notify 1` play
 the arrival path (only if sound is on). Needs `omarchy restart shell` for the new
 IPC function and settings.
 If the tones are wrong the knobs are in `make-sounds.py`: pitch, `decay`, `attack`,
-`detune` (the beating), the echo line and the target levels.
+`detune` (the beating), the echo line and the target levels; for the guitar, `guitar.py`: `make_arrive` (the notes),
+`make` (`bass_amp`, `hammer_at`, `lead`, the pluck positions and softness) and `body_ir` (the body's modes).
 Wishes not done: a per-app choice, and a quiet-hours setting.
 
 Original brief for this item, kept for reference:
